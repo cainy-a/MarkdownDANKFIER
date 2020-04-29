@@ -2,7 +2,7 @@
 make markdown DANK
 
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/9ni47p5u76kh4w9t?svg=true)](https://ci.appveyor.com/project/cainy-a/markdowndankfier)
-
+[![Travis CI Build Status](https://travis-ci.com/cainy-a/MarkdownDANKFIER.svg?branch=master)](https://travis-ci.com/cainy-a/MarkdownDANKFIER)
 
 ### What it does
 
