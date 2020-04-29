@@ -1,6 +1,9 @@
 # MarkdownDANKFIER
 make markdown DANK
 
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/9ni47p5u76kh4w9t?svg=true)](https://ci.appveyor.com/project/cainy-a/markdowndankfier)
+
+
 ### What it does
 
 so basically this turn markdown from this, to **t**_h_**i**_s_ **t**_h_**i**_n_**g**,
