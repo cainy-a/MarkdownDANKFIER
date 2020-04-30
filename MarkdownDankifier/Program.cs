@@ -4,9 +4,8 @@ using System.Text;
 
 namespace MarkdownDankifier
 {
-    class MainClass
+    partial class MainClass
     {
-        public static string fixedString;
         public static void Main(string[] args)
         {
             Console.WriteLine(
@@ -19,24 +18,27 @@ namespace MarkdownDankifier
                 "\nPlease Enter the text you wish to DANKIFY at the prompt below.\n" +
                 ">");
             string inputText = Console.ReadLine();
-            if (FilterAndFixMarkdown(inputText))
+            string filteredText = FilterAndFixMarkdown(inputText, out var exit);
+            if (exit)
             {
                 Environment.Exit(1);
             }
-            Console.WriteLine(fixedString);
+            string dankifiedText = DankifyText(filteredText);
+            Console.WriteLine($"\n\nYour DANKIFIED text, in markdown format, is:\n{dankifiedText}");
         }
-        public static bool FilterAndFixMarkdown(string input)
+        public static string FilterAndFixMarkdown(string input, out bool exit)
         {
             List<Fixes> fixesToApply = new List<Fixes>();
-			if (
-				input.Contains("-") | 
-				input.Contains("*") | 
-				input.Contains("_") | 
-				input.Contains("`") | 
-				input.Contains("#") |
-				input.Contains("\\"))
-			{
-				Console.Write("We found some markdown characters in your text. If these are formatting marks, then note that this app will mess it up.\n" +
+            if (
+                input.Contains("-") ||
+                input.Contains("*") ||
+                input.Contains("_") ||
+                input.Contains("`") ||
+                input.Contains("#") ||
+                input.Contains("\\"))
+            {
+                Console.Write(
+                    "We found some markdown characters in your text. If these are formatting marks, then note that this app will mess it up.\n" +
                     "We can, however, convert these into plaintext characters.\n" +
                     "Type \"choose\" to convert some,\n" +
                     "or type \"repair\" to convert all of them." +
@@ -45,19 +47,21 @@ namespace MarkdownDankifier
                 if (response == "repair")
                 {
                     fixesToApply.Add(Fixes.Hyphen);
-					fixesToApply.Add(Fixes.Asterisk);
-					fixesToApply.Add(Fixes.Backslash);
-					fixesToApply.Add(Fixes.Backtick);
-					fixesToApply.Add(Fixes.Hashtag);
-					fixesToApply.Add(Fixes.Underscore);
-					FixMarkdown(input, fixesToApply);
-					return false;
+                    fixesToApply.Add(Fixes.Asterisk);
+                    fixesToApply.Add(Fixes.Backslash);
+                    fixesToApply.Add(Fixes.Backtick);
+                    fixesToApply.Add(Fixes.Hashtag);
+                    fixesToApply.Add(Fixes.Underscore);
+                    exit = false;
+                    return FixMarkdown(input, fixesToApply);
                 }
-				else if (response != "choose")
+                else if (response != "choose")
                 {
-                    return true;
+                    exit = true;
+                    return input;
+                    return input;
                 }
-			}
+            }
 
             if (input.Contains("-"))
             {
@@ -73,7 +77,8 @@ namespace MarkdownDankifier
                 }
                 if (!(response == "yes" | response == "repair"))
                 {
-                    return true;
+                    exit = true;
+                    return input;
                 }
             } // Catch markdown lists
             if (input.Contains("*"))
@@ -90,7 +95,8 @@ namespace MarkdownDankifier
                 }
                 if (!(response == "yes" | response == "repair"))
                 {
-                    return true;
+                    exit = true;
+                    return input;
                 }
             } // Catch markdown asterisks
             if (input.Contains("_"))
@@ -107,7 +113,8 @@ namespace MarkdownDankifier
                 }
                 if (!(response == "yes" | response == "repair"))
                 {
-                    return true;
+                    exit = true;
+                    return input;
                 }
             } // Catch markdown underscores
             if (input.Contains("`"))
@@ -124,7 +131,8 @@ namespace MarkdownDankifier
                 }
                 if (!(response == "yes" | response == "repair"))
                 {
-                    return true;
+                    exit = true;
+                    return input;
                 }
             } // Catch markdown code blocks
             if (input.Contains("#"))
@@ -141,7 +149,8 @@ namespace MarkdownDankifier
                 }
                 if (!(response == "yes" | response == "repair"))
                 {
-                    return true;
+                    exit = true;
+                    return input;
                 }
             } // Catch markdown headers
             if (input.Contains("\\"))
@@ -158,15 +167,16 @@ namespace MarkdownDankifier
                 }
                 if (!(response == "yes" | response == "repair"))
                 {
-                    return true;
+                    exit = true;
+                    return input;
                 }
             } // Catch markdown escapes
-            FixMarkdown(input, fixesToApply);
-            return false;
+            exit = false;
+            return FixMarkdown(input, fixesToApply);
         }
         public static string FixMarkdown(string input, List<Fixes> fixes)
         {
-            fixedString = input;
+            string fixedString = input;
             if (fixes.Contains(Fixes.Backslash))
             {
                 for (int i = 0; i < fixedString.Length; i++)
