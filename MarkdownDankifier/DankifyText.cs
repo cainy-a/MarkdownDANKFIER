@@ -18,12 +18,10 @@
 				
 				toReturn = toReturn.Insert(i, "_");
 				i += 2;
-				if (toReturn.Substring(i, 1) == "\\") i++;
 				toReturn = toReturn.Insert(i++, "_");
-
+				
 				toReturn = toReturn.Insert(i, "**");
 				i += 3;
-				if (toReturn.Substring(i, 1) == "\\") i++;
 				toReturn = toReturn.Insert(i++, "**");
 			}
 			return toReturn;
