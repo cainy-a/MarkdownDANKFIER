@@ -14,13 +14,15 @@ namespace Tests
 		[Test]
 		public void PlainTextTest()
 		{
-			Assert.AreEqual("_t_**e**_s_**t**", DankifyText("test"));
+			Assert.AreEqual("_t_**e**_s_**t**", DankifyText(
+				"test"));
 		}
 		
 		[Test]
 		public void PlainTextSpacesTest()
 		{
-			Assert.AreEqual("_t_**e**_s_**t**_s_ **t**_e_**s**_t_**s**", DankifyText("tests tests"));
+			Assert.AreEqual("_t_**e**_s_**t**_s_ **t**_e_**s**_t_**s**", DankifyText(
+				"tests tests"));
 		}
 
 		[Test]
@@ -36,7 +38,7 @@ namespace Tests
 		[Test]
 		public void BasicFormattingSpaces()
 		{
-			Assert.AreEqual(@"_\*_**t**_e_**s**_t_**\*** _\__**t**_e_**s**_t_**\_**", DankifyText(
+			Assert.AreEqual(@"", DankifyText(
 				FixMarkdown(
 					"*test* _test_", 
 					new List<Fixes>
@@ -50,7 +52,7 @@ namespace Tests
 		public void TheWholeMix()
 		{
 			Assert.AreEqual(
-				@"_\#_**\#** _\-_ **\***_t_**e**_s_**t**_\*_ **t**_e_**s**_t_ **\_** _\\_**\`**_H_**e**_l_**l**_o_**\`**",
+				@"",
 				DankifyText(
 					FixMarkdown(
 						@"## - *test* test _ \`Hello`",
