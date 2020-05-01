@@ -5,3 +5,7 @@ dotnet: 2.2.207
 
 install:
 - dotnet restore
+
+script:
+ - dotnet build
+ 
