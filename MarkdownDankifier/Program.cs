@@ -118,76 +118,45 @@ namespace MarkdownDankifier
         {
             string fixedString = input;
             if (fixes.Contains(Fixes.Backslash))
-            {
-                for (int i = 0; i < fixedString.Length; i++)
-                {
-                    string currentChar = fixedString[i].ToString();
-                    if (currentChar == "\\")
-                    {
-                        fixedString = fixedString.Insert(i++, "\\");
-                    }
-                }
-            } // Escape backslashes FIRST, so that escapes added below won't be turned into '\' characters
-            
-            // Escape things below
+                fixedString = EscapeCharacter(fixedString, char.Parse("\\"));
+            // Escape backslashes FIRST, so that escapes added below won't be turned into '\' characters
             if (fixes.Contains(Fixes.Hyphen))
-            {
-                for (int i = 0; i < fixedString.Length; i++)
-                {
-                    string currentChar = fixedString[i].ToString();
-                    if (currentChar == "-")
-                    {
-                        fixedString = fixedString.Insert(i++, "\\");
-                    }
-                }
-            } // Escape hyphens
+                fixedString = EscapeCharacter(fixedString, char.Parse("-"));
+            // Escape hyphens
             if (fixes.Contains(Fixes.Asterisk))
-            {
-                for (int i = 0; i < fixedString.Length; i++)
-                {
-                    string currentChar = fixedString[i].ToString();
-                    if (currentChar == "*")
-                    {
-                        fixedString = fixedString.Insert(i++, "\\");
-                    }
-                }
-            } // Escape asterisks
+                fixedString = EscapeCharacter(fixedString, char.Parse("*"));
+            // Escape asterisks
             if (fixes.Contains(Fixes.Underscore))
-            {
-                for (int i = 0; i < fixedString.Length; i++)
-                {
-                    string currentChar = fixedString[i].ToString();
-                    if (currentChar == "_")
-                    {
-                        fixedString = fixedString.Insert(i++, "\\");
-                    }
-                }
-            } // Escape underscores
+                fixedString = EscapeCharacter(fixedString, char.Parse("_"));
+            // Escape underscores
             if (fixes.Contains(Fixes.Backtick))
-            {
-                for (int i = 0; i < fixedString.Length; i++)
-                {
-                    string currentChar = fixedString[i].ToString();
-                    if (currentChar == "`")
-                    {
-                        fixedString = fixedString.Insert(i++, "\\");
-                    }
-                }
-            } // Escape backticks
+                fixedString = EscapeCharacter(fixedString, char.Parse("`"));
+            // Escape backticks
             if (fixes.Contains(Fixes.Hashtag))
-            {
-                for (int i = 0; i < fixedString.Length; i++)
-                {
-                    string currentChar = fixedString[i].ToString();
-                    if (currentChar == "#")
-                    {
-                        fixedString = fixedString.Insert(i++, "\\");
-                    }
-                }
-            } // Escape hashtags
-            // Escape things above
+                fixedString = EscapeCharacter(fixedString, char.Parse("#"));
+            // Escape hashtags
             
             return fixedString;
+        }
+
+        /// <summary>
+        /// Escapes all occurrences of a character in some text using a backslash
+        /// </summary>
+        /// <param name="containingString">the string containing the character to escape</param>
+        /// <param name="characterToEscape">the char to escape</param>
+        /// <returns></returns>
+        public static string EscapeCharacter(string containingString, char characterToEscape)
+        {
+            string toReturn = containingString;
+            for (int i = 0; i < toReturn.Length; i++)
+            {
+                string currentChar = toReturn[i].ToString();
+                if (currentChar == characterToEscape.ToString())
+                {
+                    toReturn = toReturn.Insert(i++, "\\");
+                }
+            }
+            return toReturn;
         }
     }
 
