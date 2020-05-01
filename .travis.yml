@@ -1,7 +1,7 @@
 language: csharp
 solution: MarkdownDankifier.sln
 mono: none
-dotnet: 3.1.200
+dotnet: 2.2.207
 
 install:
 - dotnet restore
