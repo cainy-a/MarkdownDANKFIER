@@ -25,6 +25,7 @@ namespace MarkdownDankifier
             }
             string dankifiedText = DankifyText(filteredText);
             Console.WriteLine($"\n\nYour DANKIFIED text, in markdown format, is:\n{dankifiedText}");
+            Console.ReadKey();
         }
         public static string FilterAndFixMarkdown(string input, out bool exit)
         {
@@ -58,7 +59,6 @@ namespace MarkdownDankifier
                 else if (response != "choose")
                 {
                     exit = true;
-                    return input;
                     return input;
                 }
             }

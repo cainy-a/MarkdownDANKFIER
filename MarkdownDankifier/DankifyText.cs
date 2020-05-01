@@ -14,16 +14,16 @@
 			var toReturn = input;
 			for (int i = 0; i < toReturn.Length; i++)
 			{
-				if (toReturn.Substring(i, 1) == " ")
-				{
-					continue;
-				}
+				if (toReturn.Substring(i, 1) == " ") continue;
+				
 				toReturn = toReturn.Insert(i, "_");
 				i += 2;
+				if (toReturn.Substring(i, 1) == "\\") i++;
 				toReturn = toReturn.Insert(i++, "_");
 
 				toReturn = toReturn.Insert(i, "**");
 				i += 3;
+				if (toReturn.Substring(i, 1) == "\\") i++;
 				toReturn = toReturn.Insert(i++, "**");
 			}
 			return toReturn;
