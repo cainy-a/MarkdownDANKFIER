@@ -1,3 +1,6 @@
+echo "Building Universal"
+dotnet build
+
 echo "Building for Windows 64-bit"
 dotnet publish -r win-x64
 
