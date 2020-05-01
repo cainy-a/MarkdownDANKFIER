@@ -63,116 +63,56 @@ namespace MarkdownDankifier
                 }
             }
 
-            if (input.Contains("-"))
-            {
-                Console.Write("We found a hyphen (-) in your text. If this is a markdown list, then note that this app will mess it up.\n" +
-                    "We can, however, convert your hyphen to a plaintext character.\n" +
-                    "Type \"yes\" to continue,\n" +
-                    "or type \"repair\" to turn it into a plaintext character." +
-                    "\n>");
-                var response = Console.ReadLine();
-                if (response == "repair")
-                {
-                    fixesToApply.Add(Fixes.Hyphen);
-                }
-                if (!(response == "yes" | response == "repair"))
-                {
-                    exit = true;
-                    return input;
-                }
-            } // Catch markdown lists
-            if (input.Contains("*"))
-            {
-                Console.Write("We found an asterisk (*) in your text. If this is a markdown formatting mark, then note that this app will mess it up.\n" +
-                	"We can, however, convert your formatting mark to a plaintext character.\n" +
-                    "Type \"yes\" to continue,\n" +
-                    "or type \"repair\" to turn it into a plaintext character." +
-                    "\n>");
-                var response = Console.ReadLine();
-                if (response == "repair")
-                {
-                    fixesToApply.Add(Fixes.Asterisk);
-                }
-                if (!(response == "yes" | response == "repair"))
-                {
-                    exit = true;
-                    return input;
-                }
-            } // Catch markdown asterisks
-            if (input.Contains("_"))
-            {
-                Console.Write("We found an underscore (_) in your text. If this is a markdown formatting mark, then note that this app will mess it up.\n" +
-                    "We can, however, convert your formatting mark to a plaintext character.\n" +
-                    "Type \"yes\" to continue,\n" +
-                    "or type \"repair\" to turn it into a plaintext character." +
-                    "\n>");
-                var response = Console.ReadLine();
-                if (response == "repair")
-                {
-                    fixesToApply.Add(Fixes.Underscore);
-                }
-                if (!(response == "yes" | response == "repair"))
-                {
-                    exit = true;
-                    return input;
-                }
-            } // Catch markdown underscores
-            if (input.Contains("`"))
-            {
-                Console.Write("We found a backtick (`) in your text. If this is a markdown code block, then note that this app will mess it up.\n" +
-                    "We can, however, convert your backtick to a plaintext character.\n" +
-                    "Type \"yes\" to continue,\n" +
-                    "or type \"repair\" to turn it into a plaintext character." +
-                    "\n>");
-                var response = Console.ReadLine();
-                if (response == "repair")
-                {
-                    fixesToApply.Add(Fixes.Backtick);
-                }
-                if (!(response == "yes" | response == "repair"))
-                {
-                    exit = true;
-                    return input;
-                }
-            } // Catch markdown code blocks
-            if (input.Contains("#"))
-            {
-                Console.Write("We found a hashtag (#) in your text. If this is a markdown header, then note that this app will mess it up.\n" +
-                    "We can, however, convert your backtick to a plaintext character.\n" +
-                    "Type \"yes\" to continue,\n" +
-                    "or type \"repair\" to turn it into a plaintext character." +
-                    "\n>");
-                var response = Console.ReadLine();
-                if (response == "repair")
-                {
-                    fixesToApply.Add(Fixes.Hashtag);
-                }
-                if (!(response == "yes" | response == "repair"))
-                {
-                    exit = true;
-                    return input;
-                }
-            } // Catch markdown headers
-            if (input.Contains("\\"))
-            {
-                Console.Write("We found a backslash (\\) in your text. If this is a markdown escape character, then note that this app will mess it up.\n" +
-                    "We can, however, convert your backslash to a plaintext character.\n" +
-                    "Type \"yes\" to continue,\n" +
-                    "or type \"repair\" to turn it into a plaintext character." +
-                    "\n>");
-                var response = Console.ReadLine();
-                if (response == "repair")
-                {
-                    fixesToApply.Add(Fixes.Backslash);
-                }
-                if (!(response == "yes" | response == "repair"))
-                {
-                    exit = true;
-                    return input;
-                }
-            } // Catch markdown escapes
+            if (AskAboutCatch(input, out exit,
+                new CatchInfo(char.Parse("-"), "hyphen", "list")))
+                Environment.Exit(1);
+            if (AskAboutCatch(input, out exit,
+                new CatchInfo(char.Parse("*"), "asterisks", "formatting marks")))
+                Environment.Exit(1);
+            if (AskAboutCatch(input, out exit,
+                new CatchInfo(char.Parse("_"), "underscores", "formatting marks")))
+                Environment.Exit(1);
+            if (AskAboutCatch(input, out exit,
+                new CatchInfo(char.Parse("`"), "backticks", "code blocks")))
+                Environment.Exit(1);
+            if (AskAboutCatch(input, out exit,
+                new CatchInfo(char.Parse("#"), "hashtag", "header")))
+                Environment.Exit(1);
+            if (AskAboutCatch(input, out exit,
+                new CatchInfo(char.Parse("\\"), "backslash", "escape character")))
+                Environment.Exit(1);
             exit = false;
             return FixMarkdown(input, fixesToApply);
+        }
+
+        /// <summary>
+        /// Asks the user whether to escape a character
+        /// </summary>
+        /// <param name="input">The text that will be escaped.</param>
+        /// <param name="exit">out: whether to terminate the program</param>
+        /// <param name="catchInfo">contains info on the character to catch</param>
+        /// <returns>whether to escape the character.</returns>
+        public static bool AskAboutCatch(string input, out bool exit, CatchInfo catchInfo)
+        {
+            exit = false;
+            if (input.Contains(catchInfo.CharacterToCatch.ToString()))
+            {
+                Console.Write($"We found a {catchInfo.CharacterName} ({catchInfo.CharacterToCatch.ToString()}) in your text. If this is a markdown {catchInfo.MarkdownFunction}, then note that this app will mess it up.\n" +
+                              $"We can, however, convert your {catchInfo.CharacterName} to a plaintext character.\n" +
+                              "Type \"yes\" to continue,\n" +
+                              "or type \"repair\" to turn it into a plaintext character." +
+                              "\n>");
+                var response = Console.ReadLine();
+                if (response == "repair")
+                {
+                    return true;
+                }
+                if (!(response == "yes" | response == "repair"))
+                {
+                    exit = true;
+                }
+            }
+            return false;
         }
         public static string FixMarkdown(string input, List<Fixes> fixes)
         {
@@ -249,6 +189,20 @@ namespace MarkdownDankifier
             
             return fixedString;
         }
+    }
+
+    public class CatchInfo
+    {
+        public CatchInfo(char characterToCatch, string characterName, string markdownFunction)
+        {
+            CharacterToCatch = characterToCatch;
+            CharacterName = characterName;
+            MarkdownFunction = markdownFunction;
+        }
+
+        public char CharacterToCatch;
+        public string CharacterName;
+        public string MarkdownFunction;
     }
 
     public enum Fixes
