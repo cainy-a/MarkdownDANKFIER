@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Building Universal"
 dotnet build
 
