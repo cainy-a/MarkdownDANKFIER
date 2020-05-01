@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownDankifier", "MarkdownDankifier\MarkdownDankifier.csproj", "{46DFB984-9BDE-45F3-A816-C8399DEFBF62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests", "NUnitTests\NUnitTests.csproj", "{A5FE33E4-DF4A-4A3A-8FB5-B0FC087848F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{46DFB984-9BDE-45F3-A816-C8399DEFBF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46DFB984-9BDE-45F3-A816-C8399DEFBF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46DFB984-9BDE-45F3-A816-C8399DEFBF62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5FE33E4-DF4A-4A3A-8FB5-B0FC087848F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5FE33E4-DF4A-4A3A-8FB5-B0FC087848F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5FE33E4-DF4A-4A3A-8FB5-B0FC087848F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5FE33E4-DF4A-4A3A-8FB5-B0FC087848F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
