@@ -6,7 +6,7 @@
 		Bold
 	}
 
-	partial class MainClass
+	public partial class MainClass
 	{
 		public static string DankifyText(string input) => FormatString(input);
 		public static string FormatString(string input)

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MarkdownDankifier
 {
-    partial class MainClass
+    public partial class MainClass
     {
         public static void Main(string[] args)
         {
@@ -250,7 +250,8 @@ namespace MarkdownDankifier
             return fixedString;
         }
     }
-    enum Fixes
+
+    public enum Fixes
     {
         Hyphen,
         Asterisk,
